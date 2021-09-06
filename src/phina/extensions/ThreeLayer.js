@@ -16,9 +16,12 @@ export class ThreeLayer extends Layer {
     this.camera = new THREE.PerspectiveCamera(75, options.width / options.height, 1, 10000);
     this.camera.position.z = 1000;
 
-    this.light = new THREE.DirectionalLight(0xffffff, 1);
-    this.light.position.set(1, 1, 1).normalize();
-    this.scene.add(this.light);
+    this.directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    this.directionalLight.position.set(1, 1, 1).normalize();
+    this.scene.add(this.directionalLight);
+
+    this.ambientLight = new THREE.AmbientLight( 0x404040 );
+    this.scene.add(this.ambientLight);
 
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.setClearColor(options.clearColor);

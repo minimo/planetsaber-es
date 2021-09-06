@@ -2,7 +2,8 @@ import {ObjectEx} from "phina.js";
 import {BaseScene} from "@/phina/scenes/BaseScene";
 import {SCREEN} from "@/phina/app/Setting";
 import {ThreeLayer} from "@/phina/extensions/ThreeLayer";
-import * as THREE from "three"
+// import * as THREE from "three"
+import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 
 /**
  * メインシーン
@@ -30,25 +31,29 @@ export class MainScene extends BaseScene {
     const scene = this.threeLayer.scene;
     const camera = this.threeLayer.camera;
 
-    // 立方体オブジェクトを生成
-    const cube = new THREE.Mesh(
-      new THREE.BoxGeometry(300, 300, 300),
-      new THREE.MeshStandardMaterial({ color: 0xff0000, roughness: 1.0 })
+    //3Dモデル読み込み
+    const loader = new GLTFLoader();
+    let model = null;
+    loader.load(
+      "./assets/fighter.glb",
+      gltf => {
+        model = gltf.scene;
+        model.scale.set(200.0, 200.0, 200.0);
+        scene.add(gltf.scene);
+      },
+      error => console.log("gltf load error", error)
     );
-    cube.position.set(0, -250, 0);
-    scene.add(this.cube);
-
-    // カメラカウント用
-    this.count = 0;
 
     // 更新
+    let count = 0;
     this.on("enterframe", function () {
-      this.count = (this.count++ === 360) ? 0 : this.count++;
-      const x = Math.sin(Math.PI * this.count / 180) * 1000;
-      const z = Math.cos(Math.PI * this.count / 180) * 1000;
+      const x = Math.sin(Math.PI * count / 180) * 1000;
+      const z = Math.cos(Math.PI * count / 180) * 1000;
 
       camera.position.set(x, 0, z);
       camera.lookAt(0, 0, 0);
+      count++;
+      count %= 360;
     });
   }
 
