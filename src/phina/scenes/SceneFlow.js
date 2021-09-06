@@ -6,7 +6,7 @@ import {MainScene} from "./MainScene";
 export class SceneFlow extends ManagerScene {
   constructor() {
     super({
-      startLabel: "loading",
+      startLabel: "title",
       scenes: [{
         label: "loading",
         className: LoadingScene,
