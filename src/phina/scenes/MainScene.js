@@ -33,13 +33,13 @@ export class MainScene extends BaseScene {
 
     //3Dモデル読み込み
     const loader = new GLTFLoader();
-    let model = null;
     loader.load(
       "./assets/fighter.glb",
       gltf => {
-        model = gltf.scene;
+        const model = gltf.scene;
         model.scale.set(200.0, 200.0, 200.0);
-        scene.add(gltf.scene);
+        model.rotation.set(Math.PI / 2, 0, 0);
+        scene.add(model);
       },
       error => console.log("gltf load error", error)
     );
