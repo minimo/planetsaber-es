@@ -38,7 +38,7 @@ export class MainScene extends BaseScene {
       "./assets/fighter.glb",
       gltf => {
         const model = gltf.scene;
-        model.scale.set(200.0, 200.0, 200.0);
+        model.scale.set(200.0, 200.0, 300.0);
         model.rotation.set(Math.PI / 2, 0, 0);
         scene.add(model);
       },
@@ -60,7 +60,7 @@ export class MainScene extends BaseScene {
 
   setupWorld() {
     // const scene = this.threeLayer.scene;
-    // const camera = this.threeLayer.camera;
+    const camera = this.threeLayer.camera;
 
     //3Dモデル読み込み
     const loader = new GLTFLoader();
@@ -70,7 +70,8 @@ export class MainScene extends BaseScene {
         const animations = gltf.animations;
         this.animationCamera = gltf.cameras[0];
         if (animations && animations.length) {
-          this.cameraAnimationMixer = new THREE.AnimationMixer(gltf.scene);
+          this.cameraAnimationMixer = new THREE.AnimationMixer(camera);
+          // console.log(gltf, animations, this.animationCamera, this.cameraAnimationMixer)
           for (let i = 0; i < animations.length; i++) {
             let action = this.cameraAnimationMixer.clipAction(animations[i]);
             action.setLoop(THREE.LoopOnce);
@@ -84,5 +85,9 @@ export class MainScene extends BaseScene {
   }
 
   // eslint-disable-next-line no-unused-vars
-  update(_app) {}
+  update(_app) {
+    if (this.cameraAnimationMixer) {
+      this.cameraAnimationMixer.update(0.01);
+    }
+  }
 }
