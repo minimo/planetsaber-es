@@ -30,7 +30,7 @@ export class MainScene extends BaseScene {
 
   setupThreeLayer() {
     const scene = this.threeLayer.scene;
-    const camera = this.threeLayer.camera;
+    // const camera = this.threeLayer.camera;
 
     //3Dモデル読み込み
     const loader = new GLTFLoader();
@@ -46,16 +46,16 @@ export class MainScene extends BaseScene {
     );
 
     // 更新
-    let count = 0;
-    this.on("enterframe", function () {
-      const x = Math.sin(Math.PI * count / 180) * 1000;
-      const z = Math.cos(Math.PI * count / 180) * 1000;
-
-      camera.position.set(x, 0, z);
-      camera.lookAt(0, 0, 0);
-      count++;
-      count %= 360;
-    });
+    // let count = 0;
+    // this.on("enterframe", function () {
+    //   const x = Math.sin(Math.PI * count / 180) * 1000;
+    //   const z = Math.cos(Math.PI * count / 180) * 1000;
+    //
+    //   camera.position.set(x, 0, z);
+    //   camera.lookAt(0, 0, 0);
+    //   count++;
+    //   count %= 360;
+    // });
   }
 
   setupWorld() {
@@ -87,7 +87,7 @@ export class MainScene extends BaseScene {
   // eslint-disable-next-line no-unused-vars
   update(_app) {
     if (this.cameraAnimationMixer) {
-      this.cameraAnimationMixer.update(0.01);
+      this.cameraAnimationMixer.update(0.05);
     }
   }
 }
